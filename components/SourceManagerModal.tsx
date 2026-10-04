@@ -30,6 +30,7 @@ interface SourceManagerModalProps {
   sources: SourceItem[];
   onAddSource: (url: string) => Promise<{ success: boolean; message?: string }>;
   onDeleteSource: (sourceId: string) => Promise<void>;
+  onClearAllSources: () => Promise<void>;
   onPollSources: (sourceId?: string) => Promise<void>;
   isPolling: boolean;
 }
@@ -40,6 +41,7 @@ export const SourceManagerModal: React.FC<SourceManagerModalProps> = ({
   sources,
   onAddSource,
   onDeleteSource,
+  onClearAllSources,
   onPollSources,
   isPolling,
 }) => {
@@ -91,6 +93,17 @@ export const SourceManagerModal: React.FC<SourceManagerModalProps> = ({
           </div>
 
           <div className="flex items-center gap-2">
+            {sources.length > 0 && (
+              <button
+                onClick={() => onClearAllSources()}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-ocean-800 hover:bg-red-950/70 border border-ocean-700 hover:border-red-600 text-xs font-medium text-white transition-all"
+                title="Delete all sources and posts"
+              >
+                <Trash2 className="w-3.5 h-3.5 text-white" />
+                <span>Clear All</span>
+              </button>
+            )}
+
             <button
               onClick={() => onPollSources()}
               disabled={isPolling}

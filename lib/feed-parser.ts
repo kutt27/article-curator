@@ -37,7 +37,7 @@ export async function parseAndIngestFeed(
   try {
     const response = await fetch(feedUrl, {
       headers: {
-        'User-Agent': 'CuratePulseBot/1.0 (+https://curatepulse.app/bot)',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36 CuratePulse/1.0',
         'Accept': 'application/rss+xml, application/atom+xml, application/xml, text/xml, */*'
       },
       redirect: 'follow',

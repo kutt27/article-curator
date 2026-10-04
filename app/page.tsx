@@ -188,6 +188,19 @@ export default function Home() {
     }
   };
 
+  // Clear All Sources
+  const handleClearAllSources = async () => {
+    try {
+      const res = await fetch('/api/v1/sources?all=true', { method: 'DELETE' });
+      if (res.ok) {
+        await fetchSources();
+        await fetchFeed();
+      }
+    } catch (err) {
+      console.error('Failed to clear all sources:', err);
+    }
+  };
+
   // Interactions (Like, Read, Dismiss)
   const handleToggleLike = async (postId: string, current: boolean) => {
     const action = current ? 'unlike' : 'like';
@@ -513,6 +526,7 @@ export default function Home() {
         sources={sources}
         onAddSource={handleAddSource}
         onDeleteSource={handleDeleteSource}
+        onClearAllSources={handleClearAllSources}
         onPollSources={handlePollFeeds}
         isPolling={isPolling}
       />

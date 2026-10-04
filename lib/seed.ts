@@ -204,6 +204,20 @@ By adopting SIMD-accelerated bitmask scanning (simdjson), the parser locates quo
 export async function seedInitialData() {
   const db = getDb();
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS app_state (
+      key TEXT PRIMARY KEY,
+      value TEXT
+    );
+  `);
+
+  const alreadySeeded = db.prepare('SELECT value FROM app_state WHERE key = ?').get('has_seeded');
+  if (alreadySeeded) {
+    return;
+  }
+
+  db.prepare('INSERT OR REPLACE INTO app_state (key, value) VALUES (?, ?)').run('has_seeded', '1');
+
   // 1. Insert seed sources
   const insertSource = db.prepare(`
     INSERT OR IGNORE INTO sources (id, site_name, site_url, feed_url, is_active, last_polled_at, created_at)

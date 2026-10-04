@@ -90,6 +90,13 @@ export async function DELETE(req: NextRequest) {
     const db = getDb();
     const { searchParams } = new URL(req.url);
     const id = searchParams.get('id');
+    const all = searchParams.get('all');
+
+    if (all === 'true' || id === 'all') {
+      db.prepare('DELETE FROM posts').run();
+      db.prepare('DELETE FROM sources').run();
+      return NextResponse.json({ status: 'all_deleted' });
+    }
 
     if (!id) {
       return NextResponse.json({ error: 'Source ID is required' }, { status: 400 });

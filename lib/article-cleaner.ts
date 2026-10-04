@@ -24,7 +24,7 @@ const COMMON_TECH_TAGS = [
  * Strips HTML noise (scripts, styles, nav, ads, tracker pixels) and extracts clean readable markdown/text
  */
 export function cleanHtmlBody(html: string): string {
-  if (!html) return '';
+  if (!html || typeof html !== 'string') return '';
 
   let cleaned = html
     // Remove unwanted blocks entirely
